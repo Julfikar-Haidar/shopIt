@@ -13,10 +13,42 @@ class APIFeatures {
 
 
         } : {}
-
+       
         this.query = this.query.find({...keyword})
         return this
 
+    }
+
+
+    filter(){
+        const queryCopy = {...this.queryStr}
+
+        
+
+        // removing fields from the query
+
+        const removeField = ['keyword', 'limit', 'page']
+        removeField.forEach(element => delete queryCopy[element])
+
+        console.log('33',queryCopy);
+
+        // advanced filter for price, rating etc
+
+        let queryStr = JSON.stringify(queryCopy)
+        queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`)
+
+        console.log('40',queryStr);
+
+        this.query = this.query.find(JSON.parse(queryStr));
+        return this
+    }
+
+    pagination(resPerPage) {
+        const currentPage = Number(this.queryStr.page) || 1;
+        const skip = resPerPage * (currentPage - 1);
+
+        this.query = this.query.limit(resPerPage).skip(skip);
+        return this;
     }
    
 }
