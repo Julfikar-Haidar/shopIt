@@ -42,7 +42,7 @@ module.exports =(err, req, res, next) => {
             success: false,
             // error: err,
             // stack: err.stack,
-            errorMessage: err.message
+            message: err.message
         })
     }
 

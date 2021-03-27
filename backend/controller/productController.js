@@ -18,7 +18,7 @@ exports.newProduct = catchAsyncErrors( async (req, res,next) => {
 
 // get all products => /api/v1/products?keyword=Apple
 exports.getProducts =catchAsyncErrors( async (req,res, next) => {
-
+    
     const resPerPage = 4
 
     const productsCount = await Product.countDocuments();
@@ -29,6 +29,7 @@ exports.getProducts =catchAsyncErrors( async (req,res, next) => {
                             .pagination(resPerPage)
 
     const products = await apiFeatures.query
+    
     res.status(200).json({
         success: true,
         // count: product.length,
